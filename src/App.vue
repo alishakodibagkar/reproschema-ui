@@ -287,6 +287,7 @@ export default {
     setActivity(index) {
       if (!this.checkDisableBack && this.isProtocolUrl) { // check if disableBack not enabled
         if (this.$route.query.url) {
+          console.log(this.$route.query.url);
           this.$router.push(`/activities/${index}?url=${this.$route.query.url}`);
         } else {
           this.$router.push(`/activities/${index}`);
