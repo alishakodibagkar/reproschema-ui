@@ -42,4 +42,15 @@ router.beforeEach((to, from, next) => {
   next()
 })
 
+if (from.query.expiry_time && !to.query.expiry_time) {
+    if (to.path === from.path) {
+      // console.log('Identical routes detected')
+      return // This is a no-no via the documentation, but a bug in routing to identical routes strips query params, and this prevents that
+    }
+    next({path: to.path, query: {expiry_time: from.query.expiry_time}})
+  }
+
+  next()
+})
+
 export default router
