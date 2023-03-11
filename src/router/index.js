@@ -31,12 +31,12 @@ const router = new Router({
 });
 
 router.beforeEach((to, from, next) => {
-  if (from.query.token && !to.query.token) {
+  if (from.query.auth_token && !to.query.auth_token) {
     if (to.path === from.path) {
       // console.log('Identical routes detected')
       return // This is a no-no via the documentation, but a bug in routing to identical routes strips query params, and this prevents that
     }
-    next({path: to.path, query: {token: from.query.token}})
+    next({path: to.path, query: {auth_token: from.query.auth_token}})
   }
 
   next()
