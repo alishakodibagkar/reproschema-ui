@@ -38,6 +38,7 @@ router.beforeEach((to, from, next) => {
     }
     next({path: to.path, query: {auth_token: from.query.auth_token}})
   }
+  next()
   
   if (from.query.expiry_time && !to.query.expiry_time) {
     if (to.path === from.path) {
