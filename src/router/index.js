@@ -7,7 +7,7 @@ import config from '../config';
 
 Vue.use(Router);
 
-export default new Router({
+const router = new Router({
   routes: [
     {
       path: '/',
@@ -29,3 +29,17 @@ export default new Router({
     },
   ],
 });
+
+router.beforeEach((to, from, next) => {
+  if (from.query.token && !to.query.token) {
+    if (to.path === from.path) {
+      // console.log('Identical routes detected')
+      return // This is a no-no via the documentation, but a bug in routing to identical routes strips query params, and this prevents that
+    }
+    next({path: to.path, query: {token: from.query.token}})
+  }
+
+  next()
+})
+
+export default router
