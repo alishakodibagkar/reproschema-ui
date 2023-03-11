@@ -290,8 +290,6 @@ export default {
           this.$router.push(`/activities/${index}?url=${this.$route.query.url}`);
         } else {
           this.$router.push(`/activities/${index}`);
-          console.log("pushed");
-          console.log(this.$route.query.url);
         }
       }
     },
