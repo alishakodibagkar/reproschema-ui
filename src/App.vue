@@ -291,6 +291,7 @@ export default {
         } else {
           this.$router.push(`/activities/${index}`);
           console.log("pushed");
+          console.log(this.$route.query.url);
         }
       }
     },
