@@ -30,33 +30,44 @@ const router = new Router({
   ],
 });
 
-router.beforeEach((to, from, next) => {
-  if (from.query.auth_token && !to.query.auth_token) {
+// router.beforeEach((to, from, next) => {
+//   if (from.query.auth_token && !to.query.auth_token) {
+//     if (from.path === to.path) {
+//       next(false);
+//     } else {
+//       next({
+//         path: to.path,
+//         query: {...to.query, auth_token: from.query.auth_token},
+//       });
+//     }
+//   } else {
+//     next();
+//   }
+  
+//   if (from.query.expiry_time && !to.query.expiry_time) {
+//     if (from.path === to.path) {
+//       next(false);
+//     } else {
+//       next({
+//         path: to.path,
+//         query: {...to.query, expiry_time: from.query.expiry_time, auth_token: from.query.auth_token}
+//       });
+//     }
+//   } else {
+//     next();
+//   }
+  router.beforeEach((to, from, next) => {
     if (from.path === to.path) {
       next(false);
     } else {
       next({
         path: to.path,
-        query: {...to.query, auth_token: from.query.auth_token},
+        query: {from.query},
       });
     }
-  } else {
-    next();
-  }
+
   
-  if (from.query.expiry_time && !to.query.expiry_time) {
-    if (from.path === to.path) {
-      next(false);
-    } else {
-      next({
-        path: to.path,
-        query: {...to.query, expiry_time: from.query.expiry_time, auth_token: from.query.auth_token}
-      });
-    }
-  } else {
-    next();
-  }
-  
+
 })
 
 export default router
