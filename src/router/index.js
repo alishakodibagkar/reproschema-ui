@@ -58,7 +58,7 @@ const router = new Router({
   
 router.beforeEach((to, from, next) => {
   
-  const query_dict = {};
+  var query_dict = {};
   console.log(query_dict);
   
   if (from.query.auth_token && !to.query.auth_token) {
@@ -77,11 +77,11 @@ router.beforeEach((to, from, next) => {
   }
   
   if (from.query.expiry_time && !to.query.expiry_time) {
-    query_dict[expiry_time] = from.query.expiry_time;
-    console.log(expiry_tume);
     if (from.path === to.path) {
       next(false);
     } else {
+      query_dict[expiry_time] = from.query.expiry_time;
+      console.log(query_dict);
       next({
         path: to.path,
         query: {...to.query, expiry_time: from.query.expiry_time, auth_token: from.query.auth_token}
