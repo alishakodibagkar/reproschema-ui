@@ -45,8 +45,16 @@ router.beforeEach((to, from, next) => {
     query_dict["expiry_time"] = from.query.expiry_time;
     console.log(query_dict);
   }
+  
+  if (from.query.uid && !to.query.uid) {
+    query_dict["uid"] = from.query.uid;
+    console.log(query_dict);
+  }
+  
 
-  if (from.query.auth_token && !to.query.auth_token) {
+  if ((from.query.auth_token && !to.query.auth_token) 
+      || (from.query.expiry_time && !to.query.expiry_time) 
+      || (from.query.uid && !to.query.uid)) {
     if (from.path === to.path) {
       next(false);
     } else {
@@ -59,7 +67,7 @@ router.beforeEach((to, from, next) => {
     next();
   }
 
-  if (from.query.expiry_time && !to.query.expiry_time) {
+  if (from.query.expiry_time && !to.query.expiry_time ) {
     if (from.path === to.path) {
       next(false);
     } else {
