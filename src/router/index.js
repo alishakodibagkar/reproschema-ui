@@ -36,14 +36,14 @@ const router = new Router({
 //     next(false);
 //   } else {
     
-//     const query_dict = {};
+//     var query_dict = {};
     
 //     if (from.query.auth_token && !to.query.auth_token) {
-//       query_dict[auth_token] = from.query.auth_token;
+//       query_dict["auth_token"] = from.query.auth_token;
 //     }
     
 //     if (from.query.expiry_time && !to.query.expiry_time) {
-//       query_dict[expiry_time] = from.query.expiry_time;
+//       query_dict["expiry_time"] = from.query.expiry_time;
 //     }
     
 //     if (!from.query.auth_token && !from.query.expiry_time) {
@@ -65,7 +65,7 @@ router.beforeEach((to, from, next) => {
     if (from.path === to.path) {
       next(false);
     } else {
-      query_dict[auth_token] = from.query.auth_token;
+      query_dict["auth_token"] = from.query.auth_token;
       console.log(query_dict);
       next({
         path: to.path,
@@ -80,7 +80,7 @@ router.beforeEach((to, from, next) => {
     if (from.path === to.path) {
       next(false);
     } else {
-      query_dict[expiry_time] = from.query.expiry_time;
+      query_dict["expiry_time"] = from.query.expiry_time;
       console.log(query_dict);
       next({
         path: to.path,
