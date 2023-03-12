@@ -37,7 +37,7 @@ router.beforeEach((to, from, next) => {
     } else {
       next({
         path: to.path,
-        query: {auth_token: from.query.auth_token},
+        query: {...to.query, auth_token: from.query.auth_token},
       });
     }
   } else {
@@ -50,7 +50,7 @@ router.beforeEach((to, from, next) => {
     } else {
       next({
         path: to.path,
-        query: {expiry_time: from.query.expiry_time}, {auth_token: from.query.auth_token}
+        query: {...to.query, expiry_time: from.query.expiry_time}
       });
     }
   } else {
