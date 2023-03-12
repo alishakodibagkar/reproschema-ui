@@ -32,12 +32,13 @@ const router = new Router({
 
 router.beforeEach((to, from, next) => {
   
-  if (from.query && !to.query) {
+  console.log(to.query)
+  console.log(from.query)
+  
+  if (from.query != to.query) {
     if (from.path === to.path) {
       next(false);
     } else {
-      console.log(to.query)
-      console.log(from.query)
       next({
         path: to.path,
         query: {...from.query},
