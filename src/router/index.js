@@ -40,7 +40,9 @@ router.beforeEach((to, from, next) => {
         query: {auth_token: from.query.auth_token},
       });
     }
-  } 
+  } else {
+    next();
+  }
   
   if (from.query.expiry_time && !to.query.expiry_time) {
     if (from.path === to.path) {
@@ -51,6 +53,8 @@ router.beforeEach((to, from, next) => {
         query: {expiry_time: from.query.expiry_time},
       });
     }
+  } else {
+    next();
   }
   
 })
