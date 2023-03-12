@@ -31,14 +31,14 @@ const router = new Router({
 });
 
 router.beforeEach((to, from, next) => {
-  
-  const query_dict = {}
-  
   if (from.query.auth_token && !to.query.auth_token) {
     if (from.path === to.path) {
       next(false);
     } else {
-      query_dict[auth_token] = from.query.auth_token
+      next({
+        path: to.path,
+        query: {...to.query, auth_token: from.query.auth_token},
+      });
     }
   } else {
     next();
@@ -48,21 +48,16 @@ router.beforeEach((to, from, next) => {
     if (from.path === to.path) {
       next(false);
     } else {
-      query_dict[expiry_time] = from.query.expiry_time
+      console.log(from.query)
+      console.log(to.query)
+      next({
+        path: to.path,
+        query: {...to.query, expiry_time: from.query.expiry_time, auth_token: from.query.auth_token}
+      });
     }
   } else {
     next();
-  }
-  
-  
-  
-  next({
-      path: to.path,
-      query: query_dict,
-    });
-
-
-  
+  }  
 
 })
 
