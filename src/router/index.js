@@ -32,26 +32,32 @@ const router = new Router({
 
 router.beforeEach((to, from, next) => {
 
-  if (from.path === to.path) {
-    next(false);
-  } else {
+  var query_dict = {};
+  console.log(query_dict);
 
-    var query_dict = {};
-    console.log(query_dict);
-
-    
-    if (from.query.auth_token && !to.query.auth_token) {
+  if (from.query.auth_token && !to.query.auth_token) {
+    if (from.path === to.path) {
+      next(false);
+    } else {
       query_dict["auth_token"] = from.query.auth_token;
       console.log(query_dict);
     }
+  }
 
-    if (from.query.expiry_time && !to.query.expiry_time) {
+  if (from.query.expiry_time && !to.query.expiry_time) {
+    if (from.path === to.path) {
+      next(false);
+    } else {
       query_dict["expiry_time"] = from.query.expiry_time;
       console.log(query_dict);
     }
+  }
 
-    if (!from.query.auth_token && !from.query.expiry_time) {
-      next();
+  if (!from.query.auth_token && !from.query.expiry_time) {
+    next();
+  } else {
+    if (from.path === to.path) {
+      next(false);
     } else {
       console.log(query_dict);
       next({
