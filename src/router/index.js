@@ -58,7 +58,7 @@ router.beforeEach((to, from, next) => {
     }
   } 
   
-  if (!to.query.auth_token && !to.query.expiry_time) {
+  if (!from.query.auth_token && !from.query.expiry_time) {
     next();
   } else {
     console.log(query_dict)
