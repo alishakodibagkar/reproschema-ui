@@ -46,18 +46,30 @@ router.beforeEach((to, from, next) => {
     console.log(query_dict);
   }
 
-  if (!from.query.auth_token && !from.query.expiry_time) {
-    next();
-  } else {
+  if (from.query.auth_token && !to.query.auth_token) {
     if (from.path === to.path) {
       next(false);
     } else {
-      console.log(query_dict);
       next({
         path: to.path,
         query: query_dict,
       });
     }
+  } else {
+    next();
+  }
+
+  if (from.query.expiry_time && !to.query.expiry_time) {
+    if (from.path === to.path) {
+      next(false);
+    } else {
+      next({
+        path: to.path,
+        query: query_dict
+      });
+    }
+  } else {
+    next();
   }
   
 // router.beforeEach((to, from, next) => {
