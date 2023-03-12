@@ -32,57 +32,42 @@ const router = new Router({
 
 router.beforeEach((to, from, next) => {
   
-  console.log(to.query)
-  console.log(from.query)
+  const query_dict = {};
   
-  if (from.query != to.query) {
+  if (from.query.auth_token && !to.query.auth_token) {
     if (from.path === to.path) {
       next(false);
     } else {
-      next({
-        path: to.path,
-        query: {...from.query},
-      });
-    }
-  } else {
-    next();
-  }
-  
-  
-//     console.log(to.query)
-//     console.log(from.query)
-//     next({path: to.path, query: from.query})
-//   }
-  
-  
-  
-//   if (from.query.auth_token && !to.query.auth_token) {
-//     if (from.path === to.path) {
-//       next(false);
-//     } else {
 //       next({
 //         path: to.path,
 //         query: {...from.query, auth_token: from.query.auth_token},
 //       });
-//     }
-//   } else {
-//     next();
-//   }
+      query_dict[auth_token] = from.query.auth_token;
+    }
+  } 
   
-//   if (from.query.expiry_time && !to.query.expiry_time) {
-//     if (from.path === to.path) {
-//       next(false);
-//     } else {
-//       console.log(from.query)
-//       console.log(to.query)
+    if (from.query.expiry_time && !to.query.expiry_time) {
+    if (from.path === to.path) {
+      next(false);
+    } else {
 //       next({
 //         path: to.path,
-//         query: {...from.query, expiry_time: from.query.expiry_time, auth_token: from.query.auth_token}
+//         query: {...from.query, auth_token: from.query.auth_token},
 //       });
-//     }
-//   } else {
-//     next();
-//   }  
+      query_dict[expiry_time] = from.query.expiry_time;
+    }
+  } 
+  
+  if (!to.query.auth_token && !to.query.expiry_time) {
+    next();
+  } else {
+    console.log(query_dict)
+    next({
+      path: to.path,
+      query: query_dict,
+    });
+  }
+
 
 })
 
