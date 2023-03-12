@@ -31,10 +31,27 @@ const router = new Router({
 });
 
 router.beforeEach((to, from, next) => {
-    console.log(to.query)
-    console.log(from.query)
-    next({path: to.path, query: from.query})
+  
+  if (from.query && !to.query) {
+    if (from.path === to.path) {
+      next(false);
+    } else {
+      console.log(to.query)
+      console.log(from.query)
+      next({
+        path: to.path,
+        query: {...from.query},
+      });
+    }
+  } else {
+    next();
   }
+  
+  
+//     console.log(to.query)
+//     console.log(from.query)
+//     next({path: to.path, query: from.query})
+//   }
   
   
   
@@ -44,7 +61,7 @@ router.beforeEach((to, from, next) => {
 //     } else {
 //       next({
 //         path: to.path,
-//         query: {...to.query, auth_token: from.query.auth_token},
+//         query: {...from.query, auth_token: from.query.auth_token},
 //       });
 //     }
 //   } else {
@@ -59,7 +76,7 @@ router.beforeEach((to, from, next) => {
 //       console.log(to.query)
 //       next({
 //         path: to.path,
-//         query: {...to.query, expiry_time: from.query.expiry_time, auth_token: from.query.auth_token}
+//         query: {...from.query, expiry_time: from.query.expiry_time, auth_token: from.query.auth_token}
 //       });
 //     }
 //   } else {
