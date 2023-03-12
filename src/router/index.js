@@ -30,65 +30,58 @@ const router = new Router({
   ],
 });
 
-router.beforeEach((to, from, next) => {
+// router.beforeEach((to, from, next) => {
   
-  if (from.path === to.path) {
-    next(false);
-  } else {
+//   if (from.path === to.path) {
+//     next(false);
+//   } else {
     
-    const query_dict = {};
+//     const query_dict = {};
     
-    if (from.query.auth_token && !to.query.auth_token) {
-      query_dict[auth_token] = from.query.auth_token;
-    }
+//     if (from.query.auth_token && !to.query.auth_token) {
+//       query_dict[auth_token] = from.query.auth_token;
+//     }
     
-    if (from.query.expiry_time && !to.query.expiry_time) {
-      query_dict[expiry_time] = from.query.expiry_time;
-    }
+//     if (from.query.expiry_time && !to.query.expiry_time) {
+//       query_dict[expiry_time] = from.query.expiry_time;
+//     }
     
-    if (!from.query.auth_token && !from.query.expiry_time) {
-      next();
+//     if (!from.query.auth_token && !from.query.expiry_time) {
+//       next();
+//     } else {
+//       next({
+//         path: to.path,
+//         query: query_dict,
+//       });
+//     }
+//   }
+  
+router.beforeEach((to, from, next) => {
+  if (from.query.auth_token && !to.query.auth_token) {
+    if (from.path === to.path) {
+      next(false);
     } else {
       next({
         path: to.path,
-        query: query_dict,
+        query: {...to.query, auth_token: from.query.auth_token},
       });
     }
+  } else {
+    next();
   }
   
-//   if (from.query.auth_token && !to.query.auth_token) {
-//     if (from.path === to.path) {
-//       next(false);
-//     } else {
-// //       next({
-// //         path: to.path,
-// //         query: {...from.query, auth_token: from.query.auth_token},
-// //       });
-//       query_dict[auth_token] = from.query.auth_token;
-//     }
-//   } 
-  
-//     if (from.query.expiry_time && !to.query.expiry_time) {
-//     if (from.path === to.path) {
-//       next(false);
-//     } else {
-// //       next({
-// //         path: to.path,
-// //         query: {...from.query, auth_token: from.query.auth_token},
-// //       });
-//       query_dict[expiry_time] = from.query.expiry_time;
-//     }
-//   } 
-  
-//   if (!from.query.auth_token && !from.query.expiry_time) {
-//     next();
-//   } else {
-//     console.log(query_dict)
-//     next({
-//       path: to.path,
-//       query: query_dict,
-//     });
-//   }
+  if (from.query.expiry_time && !to.query.expiry_time) {
+    if (from.path === to.path) {
+      next(false);
+    } else {
+      next({
+        path: to.path,
+        query: {...to.query, expiry_time: from.query.expiry_time, auth_token: from.query.auth_token}
+      });
+    }
+  } else {
+    next();
+  }
 
 
 })
