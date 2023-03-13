@@ -31,38 +31,7 @@ const router = new Router({
 });
 
 router.beforeEach((to, from, next) => {
-
-  var query_dict = {};
-
-  if (from.query.auth_token && !to.query.auth_token) {
-    query_dict["auth_token"] = from.query.auth_token;
-  }
-
-  if (from.query.expiry_time && !to.query.expiry_time) {
-    query_dict["expiry_time"] = from.query.expiry_time;
-  }
   
-  if (from.query.uid && !to.query.uid) {
-    query_dict["uid"] = from.query.uid;
-  }
-  
-  if (from.query.lang && !to.query.lang) {
-    query_dict["lang"] = from.query.lang;
-  }
-  
-  if (from.query.questions && !to.query.questions) {
-    query_dict["questions"] = from.query.questions;
-  }
-  
-  if (from.query.branch && !to.query.branch) {
-    query_dict["branch"] = from.query.branch;
-  }
-  
-  if (from.query.day && !to.query.day) {
-    query_dict["day"] = from.query.day;
-  }
-  
-
   if ((from.query.auth_token && !to.query.auth_token) 
       || (from.query.expiry_time && !to.query.expiry_time) 
       || (from.query.uid && !to.query.uid)
