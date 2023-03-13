@@ -75,7 +75,7 @@ router.beforeEach((to, from, next) => {
     } else {
       next({
         path: to.path,
-        query: query_dict,
+        query: from.query,
       });
     }
   } else {
